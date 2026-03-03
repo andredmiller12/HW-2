@@ -1,0 +1,70 @@
+import java.util.ArrayList;
+
+public class StudentManager {
+
+    private ArrayList<Student> students;
+
+    public StudentManager() {
+        students = new ArrayList<>();
+    }
+
+    public void addStudent(Student student) {
+        if (findStudent(student.getStudentId()) != null) {
+            System.out.println("Student ID already exists.");
+            return;
+        }
+        students.add(student);
+    }
+
+    public boolean removeStudent(String studentId) {
+        Student s = findStudent(studentId);
+        if (s != null) {
+            return students.remove(s);
+        }
+        return false;
+    }
+
+    public Student findStudent(String studentId) {
+        for (Student s : students) {
+            if (s.getStudentId().equals(studentId)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Student> getStudentsByMajor(String major) {
+        ArrayList<Student> result = new ArrayList<>();
+        for (Student s : students) {
+            if (s.getMajor().equalsIgnoreCase(major)) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
+    public double getAverageGpa() {
+        if (students.isEmpty()) return 0.0;
+
+        double total = 0;
+        for (Student s : students) {
+            total += s.getGpa();
+        }
+        return total / students.size();
+    }
+
+    public int getTotalStudents() {
+        return students.size();
+    }
+
+    public void printAllStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+            return;
+        }
+
+        for (Student s : students) {
+            System.out.println(s);
+        }
+    }
+}
